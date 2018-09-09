@@ -1,3 +1,3 @@
-interface Player {
+public interface Player {
 	
 }
