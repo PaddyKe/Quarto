@@ -22,6 +22,7 @@ class Figure {
   public static final Figure SQUARE_NOHOLE_WHITE_SMALL = new Figure(false, false, false, true);
   public static final Figure SQUARE_NOHOLE_WHITE_LARGE = new Figure(false, false, false, false);
   
+  public static final Figure DUMMY = new Figure(true, true, true, true);
   
   public Figure(boolean round, boolean hole, boolean black, boolean small) {
     this.isRound = round;
@@ -69,4 +70,13 @@ class Figure {
   public Figure clone() {
     return new Figure(this.isRound, this.isBlack, this.hasHole, this.isSmall);
   }
+  
+  @Override
+  public boolean equals(Object o) {
+    if(o == null) return false;
+    if(!(o instanceof Figure)) return false;
+    Figure f = (Figure) o;
+    return this.isRound == f.isRound && this.isBlack == f.isBlack && this.hasHole == f.hasHole && this.isSmall == f.isSmall;
+  }
+  
 }
