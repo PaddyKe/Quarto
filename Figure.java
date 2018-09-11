@@ -78,5 +78,30 @@ class Figure {
     Figure f = (Figure) o;
     return this.isRound == f.isRound && this.isBlack == f.isBlack && this.hasHole == f.hasHole && this.isSmall == f.isSmall;
   }
+ 
+  public static boolean haveSomethingInCommon(Figure... fs) {
+   if(fs.length == 0) return false;
+   boolean round = fs[0].isRound;
+   boolean black = fs[0].isBlack;
+   boolean hole  = fs[0].hasHole;
+   boolean small = fs[0].isSmall;
+   
+   Figure curr = null;
+   
+   for(int i = 1; i < fs.length; i++) {
+    curr = fs[i];
+    if(curr == null) {
+      round &= (round == curr.isRound);
+      black &= (black == curr.isBlack);
+      hole &= (hole == curr.hasHole);
+      small &= (small == curr.isSmall);
+    } else {
+      return false;
+    }
+   }
+   return round | black | hole | small;
   
+  
+  }
+
 }
