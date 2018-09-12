@@ -10,13 +10,14 @@ public class HumanPlayer extends Player {
 	public static enum State {
 		NONE, PLACED_FIGURE, FIGURE_SELECTED;
 	}
-	
+
+	private static int counter = 0;
 	public State playerState;
 	private int field = -1;
 	private int figure = -1;
 
 	public HumanPlayer() {
-	    super("NoName");
+	    super("NoName" + counter++);
 		this.playerState = State.NONE;
 	}
 
