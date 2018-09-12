@@ -104,22 +104,22 @@ public class Controller implements Initializable, PlayerNotificatior {
         Figure[] figures = this.board.getRemainingFiguresArray();
 
         int counter = 0;
-        this.figure0.setImage(figures[counter++].toImage(size));
-        this.figure1.setImage(figures[counter++].toImage(size));
-        this.figure2.setImage(figures[counter++].toImage(size));
-        this.figure3.setImage(figures[counter++].toImage(size));
-        this.figure4.setImage(figures[counter++].toImage(size));
-        this.figure5.setImage(figures[counter++].toImage(size));
-        this.figure6.setImage(figures[counter++].toImage(size));
-        this.figure7.setImage(figures[counter++].toImage(size));
-        this.figure8.setImage(figures[counter++].toImage(size));
-        this.figure9.setImage(figures[counter++].toImage(size));
-        this.figure10.setImage(figures[counter++].toImage(size));
-        this.figure11.setImage(figures[counter++].toImage(size));
-        this.figure12.setImage(figures[counter++].toImage(size));
-        this.figure13.setImage(figures[counter++].toImage(size));
-        this.figure14.setImage(figures[counter++].toImage(size));
-        this.figure15.setImage(figures[counter++].toImage(size));
+        this.figure0.setImage((figures[counter++] != null) ? figures[counter - 1].toImage(size) : null);
+        this.figure1.setImage((figures[counter++] != null) ? figures[counter - 1].toImage(size) : null);
+        this.figure2.setImage((figures[counter++] != null) ? figures[counter - 1].toImage(size) : null);
+        this.figure3.setImage((figures[counter++] != null) ? figures[counter - 1].toImage(size) : null);
+        this.figure4.setImage((figures[counter++] != null) ? figures[counter - 1].toImage(size) : null);
+        this.figure5.setImage((figures[counter++] != null) ? figures[counter - 1].toImage(size) : null);
+        this.figure6.setImage((figures[counter++] != null) ? figures[counter - 1].toImage(size) : null);
+        this.figure7.setImage((figures[counter++] != null) ? figures[counter - 1].toImage(size) : null);
+        this.figure8.setImage((figures[counter++] != null) ? figures[counter - 1].toImage(size) : null);
+        this.figure9.setImage((figures[counter++] != null) ? figures[counter - 1].toImage(size) : null);
+        this.figure10.setImage((figures[counter++] != null) ? figures[counter - 1].toImage(size) : null);
+        this.figure11.setImage((figures[counter++] != null) ? figures[counter - 1].toImage(size) : null);
+        this.figure12.setImage((figures[counter++] != null) ? figures[counter - 1].toImage(size) : null);
+        this.figure13.setImage((figures[counter++] != null) ? figures[counter - 1].toImage(size) : null);
+        this.figure14.setImage((figures[counter++] != null) ? figures[counter - 1].toImage(size) : null);
+        this.figure15.setImage((figures[counter++] != null) ? figures[counter - 1].toImage(size) : null);
     }
 
     private void drawField(int size) {
@@ -164,6 +164,7 @@ public class Controller implements Initializable, PlayerNotificatior {
     public void updateView() {
         this.drawField(FIGURE_SIZE);
         this.drawFigures(FIGURE_SIZE);
+        this.selectedFigure.setImage(board.getSelectedFigure() != null ? board.getSelectedFigure().toImage((int)selectedFigure.getFitWidth()) : null);
     }
 
     private static int mousePositionToIndex(int x, int y) {

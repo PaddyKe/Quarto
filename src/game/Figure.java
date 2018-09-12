@@ -86,7 +86,11 @@ public class Figure {
 	    return SwingFXUtils.toFXImage(img, null);
     }
 
-	@Override
+    public byte getGenome() {
+        return this.genome;
+    }
+
+    @Override
 	public int hashCode() {
 		return this.genome;
 	}

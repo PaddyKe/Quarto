@@ -87,10 +87,10 @@ public class Board {
 	public Figure[][] get2DBoard() {
 		Figure[][] f = new Figure[4][4];
 		for (int i = 0; i < 4; i++) {
-			f[0][i] = this.board[i].clone();
-			f[1][i] = this.board[i + 4].clone();
-			f[2][i] = this.board[i + 8].clone();
-			f[3][i] = this.board[i + 12].clone();
+			if(this.board[i] != null) f[0][i] = this.board[i].clone();
+            if(this.board[i + 4] != null) f[1][i] = this.board[i + 4].clone();
+            if(this.board[i + 8] != null) f[2][i] = this.board[i + 8].clone();
+            if(this.board[i + 12] != null) f[3][i] = this.board[i + 12].clone();
 		}
 		return f;
 	}
@@ -101,6 +101,10 @@ public class Board {
 
     public Figure[] getField() {
 	    return this.board;
+    }
+
+    public Figure getSelectedFigure() {
+	    return this.selectedFigure;
     }
 
 	public void nextRound() {
@@ -118,6 +122,7 @@ public class Board {
                         this.notifier.resetNotification();
                         this.firstRound = false;
                         this.round++;
+                        this.notifier.updateView();
                         this.nextRound();
                         return;
 				}
@@ -125,6 +130,7 @@ public class Board {
 				this.selectFigure(this.onTurn.selectFigure(this.getRemainingFigures(), this.get2DBoard()));
 				this.round++;
 				this.firstRound = false;
+                this.notifier.updateView();
 				this.nextRound();
 				return;
 			}
@@ -136,6 +142,8 @@ public class Board {
 			switch (hp.playerState) {
 			case NONE:
 				this.placeFigure(this.selectedFigure, hp.placeFigure(this.selectedFigure, this.get2DBoard()));
+				this.selectedFigure = null;
+				this.notifier.updateView();
 				//let the user know to select a fugure
 				this.notifier.notifyPlayer("Bitte wähle eine Figur!");
 				hp.playerState = State.PLACED_FIGURE;
@@ -145,6 +153,7 @@ public class Board {
 				//round over
 				this.notifier.resetNotification();
 				this.inRound = false;
+                this.notifier.updateView();
 				this.nextRound();
 				return;
 			default:
@@ -165,11 +174,13 @@ public class Board {
 			if(!(this.onTurn instanceof HumanPlayer)) {
 				this.placeFigure(this.selectedFigure, this.onTurn.placeFigure(this.selectedFigure, this.get2DBoard()));
 				this.selectFigure(this.onTurn.selectFigure(this.getRemainingFigures(), this.get2DBoard()));
+                this.notifier.updateView();
 				this.nextRound();
 			} else {
 				((HumanPlayer)this.onTurn).playerState = HumanPlayer.State.NONE;
 				this.notifier.notifyPlayer("Wähle ein Feld für diese Figur");
 				//let the user knot to place place the figure and press the accept button
+                this.notifier.updateView();
 				this.inRound = true;
 				return;
 			}
@@ -180,13 +191,16 @@ public class Board {
 	}
 	
 	private void selectFigure(Figure f) {
-		if(getRemainingFigures().contains(f))
-			this.selectedFigure = f;
+		if(getRemainingFigures().contains(f)) {
+            this.remaining[f.getGenome()] = null;
+            this.selectedFigure = f;
+        }
 	}
 	
 	private void placeFigure(Figure f, int index) {
-		if(this.board[index] != null)
-			this.board[index] = f;
+		if(this.board[index] == null) {
+		    this.board[index] = f;
+        }
 	}
 
 	public Player getP1() {

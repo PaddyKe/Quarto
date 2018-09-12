@@ -1,9 +1,9 @@
 package player;
 
-import java.util.List;
-
 import game.Figure;
 import interfaces.Player;
+
+import java.util.List;
 
 public class HumanPlayer implements Player {
 
@@ -12,9 +12,20 @@ public class HumanPlayer implements Player {
 	}
 	
 	public State playerState;
-	private int field;
-	private int figure;
-	
+	private int field = -1;
+	private int figure = -1;
+	private String name;
+
+	public HumanPlayer() {
+		this.playerState = State.NONE;
+		this.name = "NoName";
+	}
+
+	public HumanPlayer(String name) {
+		this.playerState = State.NONE;
+		this.name = name;
+	}
+
 	public void handleFieldClick(int index) {
 		this.field = index;
 	}
@@ -27,16 +38,21 @@ public class HumanPlayer implements Player {
 	public int placeFigure(Figure f, Figure[][] board) {
 		int row = (this.field / 4);
 		int col = this.field % 4;
-		if(board[row][col] == null)
-			return this.field;
+		if(board[row][col] == null) {
+            int temp = this.field;
+            this.field = -1;
+		    return temp;
+        }
 		throw new RuntimeException("Field already in use");
 	}
 
 	@Override
 	public Figure selectFigure(List<Figure> remaining, Figure[][] board) {
 		Figure temp = new Figure((byte)figure);
-		if(remaining.contains(temp))
-			return remaining.get(remaining.indexOf(temp));
+		if(remaining.contains(temp)) {
+		    this.figure = -1;
+            return remaining.get(remaining.indexOf(temp));
+		}
 		throw new RuntimeException("Figure already in use.");
 	}
 	
