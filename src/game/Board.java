@@ -1,12 +1,12 @@
 package game;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import interfaces.Player;
 import interfaces.PlayerNotificatior;
 import player.HumanPlayer;
 import player.HumanPlayer.State;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
 
@@ -45,7 +45,7 @@ public class Board {
 		}
 	}
 	
-	public List<Figure> getRemainigFigures() {
+	public List<Figure> getRemainingFigures() {
 		List<Figure> temp = new ArrayList<Figure>();
 		for (Figure figure : this.remaining) {
 			if (figure != null)
@@ -95,26 +95,34 @@ public class Board {
 		return f;
 	}
 
+	public Figure[] getRemainingFiguresArray() {
+	    return this.remaining;
+    }
+
+    public Figure[] getField() {
+	    return this.board;
+    }
+
 	public void nextRound() {
 		if(firstRound) {
 			if(this.onTurn instanceof HumanPlayer) {
 				HumanPlayer hp = (HumanPlayer) this.onTurn;
 				switch (hp.playerState) {
-				case NONE:
-					//let the player know to selekt a figure
-					this.notifier.notifyPlayer("Bitte wähle eine Figur!");
-					hp.playerState = HumanPlayer.State.FIGURE_SELECTED;
-					return;
-				default:
-					this.selectFigure(hp.selectFigure(this.getRemainigFigures(), this.get2DBoard()));
-					this.notifier.resetNotification();
-					this.firstRound = false;
-					this.round++;
-					this.nextRound();
-					return;
+				    case NONE:
+                        //let the player know to selekt a figure
+                        this.notifier.notifyPlayer("Bitte wähle eine Figur!");
+                        hp.playerState = HumanPlayer.State.FIGURE_SELECTED;
+                        return;
+                    default:
+                        this.selectFigure(hp.selectFigure(this.getRemainingFigures(), this.get2DBoard()));
+                        this.notifier.resetNotification();
+                        this.firstRound = false;
+                        this.round++;
+                        this.nextRound();
+                        return;
 				}
 			} else {
-				this.selectFigure(this.onTurn.selectFigure(this.getRemainigFigures(), this.get2DBoard()));
+				this.selectFigure(this.onTurn.selectFigure(this.getRemainingFigures(), this.get2DBoard()));
 				this.round++;
 				this.firstRound = false;
 				this.nextRound();
@@ -133,7 +141,7 @@ public class Board {
 				hp.playerState = State.PLACED_FIGURE;
 				return;
 			case PLACED_FIGURE:
-				this.selectFigure(hp.selectFigure(this.getRemainigFigures(), this.get2DBoard()));
+				this.selectFigure(hp.selectFigure(this.getRemainingFigures(), this.get2DBoard()));
 				//round over
 				this.notifier.resetNotification();
 				this.inRound = false;
@@ -156,7 +164,7 @@ public class Board {
 			
 			if(!(this.onTurn instanceof HumanPlayer)) {
 				this.placeFigure(this.selectedFigure, this.onTurn.placeFigure(this.selectedFigure, this.get2DBoard()));
-				this.selectFigure(this.onTurn.selectFigure(this.getRemainigFigures(), this.get2DBoard()));
+				this.selectFigure(this.onTurn.selectFigure(this.getRemainingFigures(), this.get2DBoard()));
 				this.nextRound();
 			} else {
 				((HumanPlayer)this.onTurn).playerState = HumanPlayer.State.NONE;
@@ -172,7 +180,7 @@ public class Board {
 	}
 	
 	private void selectFigure(Figure f) {
-		if(getRemainigFigures().contains(f))
+		if(getRemainingFigures().contains(f))
 			this.selectedFigure = f;
 	}
 	
@@ -180,5 +188,13 @@ public class Board {
 		if(this.board[index] != null)
 			this.board[index] = f;
 	}
-	
+
+	public Player getP1() {
+		return this.p1;
+	}
+
+	public Player getP2() {
+		return this.p2;
+	}
+
 }

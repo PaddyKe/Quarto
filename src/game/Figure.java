@@ -1,5 +1,11 @@
 package game;
 
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
 public class Figure {
 
 	private byte genome;
@@ -37,6 +43,48 @@ public class Figure {
 	public boolean isSmall() {
 		return (this.genome & SMALL_MASK) == 8;
 	}
+
+	public Image toImage(int size) {
+        BufferedImage img = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = (Graphics2D)img.getGraphics();
+        g.setRenderingHints(new RenderingHints(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON));
+        g.setComposite(AlphaComposite.Clear);
+        g.fillRect(0,0, size, size);
+        g.setComposite(AlphaComposite.Src);
+        if(this.isBlack())
+            g.setColor(new Color(45, 23, 0, 255));
+        else
+            g.setColor(new Color(216, 180, 79, 255));
+
+        boolean small = this.isSmall();
+
+        if(this.isRound()) {
+            if(small) {
+                g.fillOval(size / 4, size / 4, size / 2, size / 2);
+            } else {
+                g.fillOval(0, 0, size, size);
+            }
+        } else {
+            if(small) {
+                g.fillRoundRect(size / 4, size / 4, size / 2, size / 2, 15, 15);
+            } else {
+                g.fillRoundRect(0, 0, size, size , 30,30);
+            }
+        }
+
+        if(this.hasHole()) {
+            g.setColor(new Color(0,0,0,0));
+            g.setComposite(AlphaComposite.Clear);
+            if(small) {
+                g.fillOval(size / 4 + size / 8 + 1, size / 4 + size / 8 , size / 4, size / 4);
+            } else {
+                g.fillOval(size / 4 + 1, size / 4 + 1, size / 2, size / 2);
+            }
+
+        }
+
+	    return SwingFXUtils.toFXImage(img, null);
+    }
 
 	@Override
 	public int hashCode() {
