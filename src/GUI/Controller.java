@@ -96,6 +96,7 @@ public class Controller implements Initializable, PlayerNotificatior {
 
     private void initGame(Player p1, Player p2, int size) {
         this.board = new Board(p1, p2, this);
+        this.board.nextRound();
         this.drawFigures(size);
     }
 
@@ -165,6 +166,11 @@ public class Controller implements Initializable, PlayerNotificatior {
         this.drawField(FIGURE_SIZE);
         this.drawFigures(FIGURE_SIZE);
         this.selectedFigure.setImage(board.getSelectedFigure() != null ? board.getSelectedFigure().toImage((int)selectedFigure.getFitWidth()) : null);
+    }
+
+    @Override
+    public void setPlayer(String name) {
+        //TODO tell the players whos turn it is.
     }
 
     private static int mousePositionToIndex(int x, int y) {

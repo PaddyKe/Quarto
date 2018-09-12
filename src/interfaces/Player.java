@@ -1,12 +1,26 @@
 package interfaces;
 
-import java.util.List;
-
 import game.Figure;
 
-public interface Player {
+import java.util.List;
 
-	public int placeFigure(Figure f, Figure[][] board);
-	public Figure selectFigure(List<Figure> remaining, Figure[][] board);
+public abstract class Player {
+
+	private String name;
+
+	public Player(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public abstract int placeFigure(Figure f, Figure[][] board);
+	public abstract Figure selectFigure(List<Figure> remaining, Figure[][] board);
 	
 }

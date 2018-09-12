@@ -5,7 +5,7 @@ import interfaces.Player;
 
 import java.util.List;
 
-public class HumanPlayer implements Player {
+public class HumanPlayer extends Player {
 
 	public static enum State {
 		NONE, PLACED_FIGURE, FIGURE_SELECTED;
@@ -14,16 +14,15 @@ public class HumanPlayer implements Player {
 	public State playerState;
 	private int field = -1;
 	private int figure = -1;
-	private String name;
 
 	public HumanPlayer() {
+	    super("NoName");
 		this.playerState = State.NONE;
-		this.name = "NoName";
 	}
 
 	public HumanPlayer(String name) {
-		this.playerState = State.NONE;
-		this.name = name;
+		super(name);
+	    this.playerState = State.NONE;
 	}
 
 	public void handleFieldClick(int index) {
