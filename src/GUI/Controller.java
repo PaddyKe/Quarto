@@ -2,17 +2,15 @@ package GUI;
 
 import interfaces.PlayerNotificatior;
 import javafx.beans.binding.Bindings;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 
 import javax.imageio.ImageIO;
@@ -72,7 +70,11 @@ public class Controller implements Initializable, PlayerNotificatior {
     public void initialize(URL location, ResourceBundle resources) {
         this.figures.disableProperty().bind(Bindings.equal("Wähle eine Figur", messageLabel.textProperty()));
         this.drawer = gameField.getGraphicsContext2D();
-
+        try {
+            this.drawer.drawImage(SwingFXUtils.toFXImage(ImageIO.read(this.getClass().getResource("/resources/background.png")), null), 0, 0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void figureSelect(MouseEvent mouseEvent) {
@@ -86,7 +88,6 @@ public class Controller implements Initializable, PlayerNotificatior {
 
     public void applyButton(MouseEvent mouseEvent) {
 
-        gameField.getGraphicsContext2D().drawImage(new Image("file:P:\\Patrick\\Documents\\Processing_Projects\\quarto\\quarto\\wood.jpg"), 0, 0);
 
 
         System.out.println(figures.isDisabled());
