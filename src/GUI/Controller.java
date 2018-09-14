@@ -14,6 +14,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
+import javafx.stage.WindowEvent;
 import player.HumanPlayer;
 
 import javax.imageio.ImageIO;
@@ -66,6 +68,8 @@ public class Controller implements Initializable, PlayerNotificatior {
     private Label messageLabel;
     @FXML
     private Canvas gameField;
+    @FXML
+    private Label playerLabel;
 
     private GraphicsContext drawer;
 
@@ -73,11 +77,15 @@ public class Controller implements Initializable, PlayerNotificatior {
 
     private static final int FIGURE_SIZE = 75;
 
+
+    public void shutdown(WindowEvent event) {
+        board.gameRunning = false;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //this.figures.disableProperty().bind(Bindings.not(Bindings.equal("Wähle eine Figur", messageLabel.textProperty())));
         this.drawer = gameField.getGraphicsContext2D();
-
         try {
             this.drawer.drawImage(SwingFXUtils.toFXImage(ImageIO.read(this.getClass().getResource("/resources/background.png")), null), 0, 0);
         } catch (IOException e) {
@@ -153,6 +161,12 @@ public class Controller implements Initializable, PlayerNotificatior {
 
     @Override
     public void notifyPlayer(String notification) {
+        if(notification.contains("gewonnen")) {
+            this.playerLabel.setTextFill(Color.RED);
+            this.messageLabel.setTextFill(Color.RED);
+        } else {
+            this.messageLabel.setTextFill(Color.BLACK);
+        }
         this.messageLabel.setText(notification);
     }
 
@@ -170,7 +184,7 @@ public class Controller implements Initializable, PlayerNotificatior {
 
     @Override
     public void setPlayer(String name) {
-        //TODO tell the players whos turn it is.
+        this.playerLabel.setText(name);
     }
 
     private static int mousePositionToIndex(int x, int y) {

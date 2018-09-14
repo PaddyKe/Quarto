@@ -115,7 +115,7 @@ public class Figure {
 		boolean small = f.isSmall();
 		boolean black = f.isBlack();
 		boolean hole  = f.hasHole();
-		
+		// TODO do something, that all fals cann winn too (all figures are tall but i loose)
 		for (int i = 1; i < figures.length; i++) {
 			f = figures[i];
 			if(f == null) return false;

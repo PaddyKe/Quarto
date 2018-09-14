@@ -2,6 +2,7 @@ package game;
 
 import interfaces.Player;
 import interfaces.PlayerNotificatior;
+import javafx.application.Platform;
 import player.HumanPlayer;
 import player.HumanPlayer.State;
 
@@ -20,10 +21,25 @@ public class Board {
 	private Figure selectedFigure;
 	private boolean firstRound = true; 
 	private PlayerNotificatior notifier;
+    public boolean gameRunning = true;
+
 
 	public Board(Player p1, Player p2, PlayerNotificatior not) {
 		this.board = new Figure[16];
 		this.remaining = new Figure[16];
+
+		new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(gameRunning) {
+                    if(win()) {
+                        gameRunning = false;
+                        handleWin(onTurn);
+                    }
+                }
+            }
+        }).start();
+
 		this.p1 = p1;
 		this.p2 = p2;
 		this.notifier = not;
@@ -65,7 +81,8 @@ public class Board {
 
 		// rows and columns
 		for (int i = 0; i < 4; i++) {
-			winns |= Figure.hasGeneInCommon(this.board[i], this.board[i + 1], this.board[i + 2], this.board[i + 3]);
+
+			winns |= Figure.hasGeneInCommon(this.board[(i * 4)], this.board[(i * 4) + 1], this.board[(i * 4) + 2], this.board[(i * 4) + 3]);
 			winns |= Figure.hasGeneInCommon(this.board[i], this.board[i + 4], this.board[i + 8], this.board[i + 12]);
 			if (winns)
 				return true;
@@ -108,12 +125,14 @@ public class Board {
     }
 
 	public void nextRound() {
-		if(firstRound) {
+	    if(!this.gameRunning) return;
+	    if(firstRound) {
 			if(this.onTurn instanceof HumanPlayer) {
 				HumanPlayer hp = (HumanPlayer) this.onTurn;
 				switch (hp.playerState) {
 				    case NONE:
                         //let the player know to selekt a figure
+                        this.notifier.setPlayer(this.onTurn.getName());
                         this.notifier.notifyPlayer("Bitte wähle eine Figur!");
                         hp.playerState = HumanPlayer.State.FIGURE_SELECTED;
                         return;
@@ -123,7 +142,10 @@ public class Board {
                         this.firstRound = false;
                         this.round++;
                         this.notifier.updateView();
-                        this.nextRound();
+                        if(this.win())
+                            handleWin(this.onTurn);
+                        else
+                            this.nextRound();
                         return;
 				}
 			} else {
@@ -131,7 +153,10 @@ public class Board {
 				this.round++;
 				this.firstRound = false;
                 this.notifier.updateView();
-				this.nextRound();
+                if(this.win())
+                    handleWin(this.onTurn);
+                else
+                    this.nextRound();
 				return;
 			}
 		}
@@ -145,7 +170,8 @@ public class Board {
 				this.selectedFigure = null;
 				this.notifier.updateView();
 				//let the user know to select a fugure
-				this.notifier.notifyPlayer("Bitte wähle eine Figur!");
+                this.notifier.setPlayer(this.onTurn.getName());
+				this.notifier.notifyPlayer(onTurn.getName() + " Bitte wähle eine Figur!");
 				hp.playerState = State.PLACED_FIGURE;
 				return;
 			case PLACED_FIGURE:
@@ -154,7 +180,10 @@ public class Board {
 				this.notifier.resetNotification();
 				this.inRound = false;
                 this.notifier.updateView();
-				this.nextRound();
+                if(this.win())
+                    handleWin(this.onTurn);
+                else
+                    this.nextRound();
 				return;
 			default:
 				return;
@@ -162,22 +191,29 @@ public class Board {
 			
 			
 		} else {
-			
+			/*
 			if(this.round % 2 == 0) {
 				this.onTurn = p1;
 			} else {
 				this.onTurn = p2;
 			}
-			
+			*/
+
+			this.swapPlayer();
+
 			this.round++;
 			
 			if(!(this.onTurn instanceof HumanPlayer)) {
 				this.placeFigure(this.selectedFigure, this.onTurn.placeFigure(this.selectedFigure, this.get2DBoard()));
 				this.selectFigure(this.onTurn.selectFigure(this.getRemainingFigures(), this.get2DBoard()));
                 this.notifier.updateView();
-				this.nextRound();
+                if(this.win())
+                    handleWin(this.onTurn);
+                else
+                    this.nextRound();
 			} else {
 				((HumanPlayer)this.onTurn).playerState = HumanPlayer.State.NONE;
+                this.notifier.setPlayer(this.onTurn.getName());
 				this.notifier.notifyPlayer("Wähle ein Feld für diese Figur");
 				//let the user knot to place place the figure and press the accept button
                 this.notifier.updateView();
@@ -189,7 +225,15 @@ public class Board {
 		
 		}
 	}
-	
+
+	private void swapPlayer() {
+	    if(this.p1 == this.onTurn) {
+            this.onTurn = this.p2;
+        } else {
+            this.onTurn = this.p1;
+        }
+    }
+
 	private void selectFigure(Figure f) {
 		if(getRemainingFigures().contains(f)) {
             this.remaining[f.getGenome()] = null;
@@ -209,6 +253,15 @@ public class Board {
 
 	public Player getP2() {
 		return this.p2;
+	}
+
+
+	private void handleWin(Player lastMove) {
+		if(this.win()) {
+            Platform.runLater(() -> this.notifier.notifyPlayer(" hat gewonnen."));
+		    Platform.runLater(() -> this.notifier.setPlayer(lastMove.getName()));
+            System.out.println(lastMove.getName() + " hat gewonnen");
+        }
 	}
 
 }

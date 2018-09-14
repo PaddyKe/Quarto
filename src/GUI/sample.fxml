@@ -27,8 +27,9 @@
             <ImageView fx:id="figure15" fitHeight="75.0" fitWidth="75.0" onMouseClicked="#figureSelect" pickOnBounds="true" preserveRatio="true" />
          </children></TilePane>
       <Canvas fx:id="gameField" height="582.0" onMouseClicked="#gameFieldClicked" width="583.0" />
-      <ImageView fx:id="selectedFigure" fitHeight="200.0" fitWidth="200.0" layoutX="657.0" layoutY="343.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="39.0" AnchorPane.rightAnchor="63.0" />
-      <Label fx:id="messageLabel" layoutX="712.0" layoutY="321.0" text="Wähle eine Figur" textAlignment="CENTER" AnchorPane.bottomAnchor="244.0" AnchorPane.rightAnchor="119.0" />
-      <Button fx:id="applyButton" layoutX="681.0" layoutY="548.0" mnemonicParsing="false" onMouseClicked="#applyButton" prefHeight="25.0" prefWidth="150.0" text="Bestätigen" AnchorPane.bottomAnchor="9.0" AnchorPane.rightAnchor="89.0" />
+      <ImageView fx:id="selectedFigure" fitHeight="200.0" fitWidth="200.0" layoutX="657.0" layoutY="371.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="63.0" />
+      <Label fx:id="playerLabel" alignment="TOP_CENTER" layoutX="659.0" layoutY="326.0" prefHeight="17.0" prefWidth="200.0" text="[Player]" textAlignment="CENTER" />
+      <Label fx:id="messageLabel" alignment="TOP_CENTER" layoutX="657.0" layoutY="343.0" prefHeight="17.0" prefWidth="200.0" text="Wähle eine Figur" textAlignment="CENTER" />
+      <Button fx:id="applyButton" layoutX="860.0" layoutY="548.0" mnemonicParsing="false" onMouseClicked="#applyButton" prefHeight="25.0" prefWidth="50.0" text="Bestätigen" />
    </children>
 </AnchorPane>
