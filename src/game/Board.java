@@ -255,7 +255,6 @@ public class Board {
 		return this.p2;
 	}
 
-
 	private void handleWin(Player lastMove) {
 		if(this.win()) {
             Platform.runLater(() -> this.notifier.notifyPlayer(" hat gewonnen."));

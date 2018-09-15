@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 import game.Board;
 import game.Figure;
@@ -98,7 +98,12 @@ public class Controller implements Initializable, PlayerNotificatior {
         this.figure1.setImage(SwingFXUtils.toFXImage(br, null));
         this.figure4.setImage(SwingFXUtils.toFXImage(br, null));
 
+
+
+        // das ist der interessante part:
         initGame(new HumanPlayer(), new HumanPlayer(), FIGURE_SIZE);
+        // ab jetzt duerfte es wieder uninterssant werden.
+
         this.drawField(FIGURE_SIZE);
     }
 
@@ -106,8 +111,8 @@ public class Controller implements Initializable, PlayerNotificatior {
         this.board = new Board(p1, p2, this);
         this.board.nextRound();
         this.drawFigures(size);
+        this.drawField(size);
     }
-
 
     private void drawFigures(int size) {
         Figure[] figures = this.board.getRemainingFiguresArray();
@@ -153,7 +158,6 @@ public class Controller implements Initializable, PlayerNotificatior {
         if(index > -1)
             this.board.handleFieldClick(index);
     }
-
 
     public void applyButton(MouseEvent mouseEvent) {
         this.board.nextRound();
@@ -263,6 +267,11 @@ public class Controller implements Initializable, PlayerNotificatior {
             default:
                 return new int[]{};
         }
+    }
+
+    public void restart() {
+        //this.board = new Board(this.board.getP1(), this.board.getP2(), this);
+        initGame(this.board.getP1(), this.board.getP2(), FIGURE_SIZE);
     }
 
 }
