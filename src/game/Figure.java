@@ -111,18 +111,17 @@ public class Figure {
 		Figure f = figures[0];
 		if(f == null) return false;
 		
-		boolean round = f.isRound();
-		boolean small = f.isSmall();
-		boolean black = f.isBlack();
-		boolean hole  = f.hasHole();
-		// TODO do something, that all fals cann winn too (all figures are tall but i loose)
+		boolean round = true;
+		boolean small = true;
+		boolean black = true;
+		boolean hole  = true;
 		for (int i = 1; i < figures.length; i++) {
 			f = figures[i];
 			if(f == null) return false;
-			round &= f.isRound();
-			black &= f.isBlack();
-			hole  &= f.hasHole();
-			small &= f.isSmall();
+			round &= (f.isRound() == figures[i - 1].isRound());
+			black &= (f.isBlack() == figures[i - 1].isBlack());
+			hole  &= (f.hasHole() == figures[i - 1].hasHole());
+			small &= (f.isSmall() == figures[i - 1].isSmall());
 		}
 
 		return round | small | hole | black;
