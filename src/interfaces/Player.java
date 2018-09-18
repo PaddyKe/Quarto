@@ -3,9 +3,10 @@ package interfaces;
 import game.Figure;
 
 import java.util.List;
+import java.util.Random;
 
 public abstract class Player {
-
+	protected Random rnd;
 	private String name;
 	private static final String[] noNameNames = {"Albert Tross", "Alexander Platz", "Ali Baba", "Alter", "Fritz", "Andi Mauer",
 			"Andreas Kreuz", "Ann Geber", "Ann Zug", "Anna Bolika", "Anna Gramm", "Anna Liese", "Anna Nass", "Anna Theke", "Anne Wand",
@@ -34,7 +35,15 @@ public abstract class Player {
 			"Wilma Haschen", "Wilma Pfannkuchen", "Wilma Ruhe", "Wilma Streit", "Wolfgang See"};
 
 	public Player(String name) {
+		this.rnd = new Random();
+		this.rnd.nextInt(); this.rnd.nextInt(); this.rnd.nextInt();
 		this.name = name;
+	}
+
+	public Player() {
+		this.rnd = new Random();
+		this.rnd.nextInt(); this.rnd.nextInt(); this.rnd.nextInt();
+		this.name = getFunnyName();
 	}
 
 	public String getName() {
@@ -50,9 +59,35 @@ public abstract class Player {
         return noNameNames[(int)(Math.random() * noNameNames.length)];
     }
 
+    protected static int coordinatesToIndex(int x, int y) {
+		return 4 * y + x;
+	}
 
-    // abstract methods
-	public abstract int placeFigure(Figure f, Figure[][] board);
-	public abstract Figure selectFigure(List<Figure> remaining, Figure[][] board);
+	private static Figure[][] from1Dto2D(Figure[] f) {
+		Figure[][] fs = new Figure[4][4];
+
+		for(int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				fs[i][j] = f[Player.coordinatesToIndex(j, i)];
+			}
+		}
+		return fs;
+	}
+
+	public int placeFigure(Figure f, Figure[] board, List<Figure> remaining) {
+		return placeFigure(f, from1Dto2D(board), remaining);
+	}
+
+	public Figure selectFigure(List<Figure> remaining, Figure[] board) {
+		return selectFigure(remaining, from1Dto2D(board));
+	}
+
+	public int placeFigure(Figure f, Figure[][] board, List<Figure> remaining) {
+		return -1;
+	}
+
+	public Figure selectFigure(List<Figure> remaining, Figure[][] board) {
+		return null;
+	}
 
 }

@@ -18,7 +18,7 @@ public class HumanPlayer extends Player {
 
 
     public HumanPlayer() {
-        super(Player.getFunnyName());
+        super();
         this.playerState = State.NONE;
     }
 
@@ -36,7 +36,7 @@ public class HumanPlayer extends Player {
     }
 
     @Override
-    public int placeFigure(Figure f, Figure[][] board) {
+    public int placeFigure(Figure f, Figure[][] board, List<Figure> remaining) {
         int row = (this.field / 4);
         int col = this.field % 4;
         if (board[row][col] == null) {
@@ -48,7 +48,7 @@ public class HumanPlayer extends Player {
     }
 
     @Override
-    public Figure selectFigure(List<Figure> remaining, Figure[][] board) {
+    public Figure selectFigure(List<Figure> remaining, Figure[] board) {
         Figure temp = new Figure((byte) figure);
         if (remaining.contains(temp)) {
             this.figure = -1;

@@ -17,6 +17,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.stage.WindowEvent;
 import player.HumanPlayer;
+import player.PerfectKI;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -101,7 +102,7 @@ public class Controller implements Initializable, PlayerNotificatior {
 
 
         // das ist der interessante part:
-        initGame(new HumanPlayer(), new HumanPlayer(), FIGURE_SIZE);
+        initGame(new HumanPlayer(), new PerfectKI(), FIGURE_SIZE);
         // ab jetzt duerfte es wieder uninterssant werden.
 
         this.drawField(FIGURE_SIZE);

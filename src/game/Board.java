@@ -112,6 +112,14 @@ public class Board {
 		return f;
 	}
 
+	public Figure[] get1DBoard() {
+		Figure[] fs = new Figure[this.board.length];
+		for(int i = 0; i < fs.length; i++) {
+			fs[i] = (board[i] == null) ? null : board[i].clone();
+		}
+		return fs;
+	}
+
 	public Figure[] getRemainingFiguresArray() {
 	    return this.remaining;
     }
@@ -137,7 +145,7 @@ public class Board {
                         hp.playerState = HumanPlayer.State.FIGURE_SELECTED;
                         return;
                     default:
-                        this.selectFigure(hp.selectFigure(this.getRemainingFigures(), this.get2DBoard()));
+                        this.selectFigure(hp.selectFigure(this.getRemainingFigures(), this.get1DBoard()));
                         this.notifier.resetNotification();
                         this.firstRound = false;
                         this.round++;
@@ -149,7 +157,7 @@ public class Board {
                         return;
 				}
 			} else {
-				this.selectFigure(this.onTurn.selectFigure(this.getRemainingFigures(), this.get2DBoard()));
+				this.selectFigure(this.onTurn.selectFigure(this.getRemainingFigures(), this.get1DBoard()));
 				this.round++;
 				this.firstRound = false;
                 this.notifier.updateView();
@@ -166,7 +174,7 @@ public class Board {
 			HumanPlayer hp = (HumanPlayer)this.onTurn;
 			switch (hp.playerState) {
 			case NONE:
-				this.placeFigure(this.selectedFigure, hp.placeFigure(this.selectedFigure, this.get2DBoard()));
+				this.placeFigure(this.selectedFigure, hp.placeFigure(this.selectedFigure, this.get1DBoard(), this.getRemainingFigures()));
 				this.selectedFigure = null;
 				this.notifier.updateView();
 				//let the user know to select a fugure
@@ -175,7 +183,7 @@ public class Board {
 				hp.playerState = State.PLACED_FIGURE;
 				return;
 			case PLACED_FIGURE:
-				this.selectFigure(hp.selectFigure(this.getRemainingFigures(), this.get2DBoard()));
+				this.selectFigure(hp.selectFigure(this.getRemainingFigures(), this.get1DBoard()));
 				//round over
 				this.notifier.resetNotification();
 				this.inRound = false;
@@ -204,8 +212,8 @@ public class Board {
 			this.round++;
 			
 			if(!(this.onTurn instanceof HumanPlayer)) {
-				this.placeFigure(this.selectedFigure, this.onTurn.placeFigure(this.selectedFigure, this.get2DBoard()));
-				this.selectFigure(this.onTurn.selectFigure(this.getRemainingFigures(), this.get2DBoard()));
+				this.placeFigure(this.selectedFigure, this.onTurn.placeFigure(this.selectedFigure, this.get1DBoard(), this.getRemainingFigures()));
+				this.selectFigure(this.onTurn.selectFigure(this.getRemainingFigures(), this.get1DBoard()));
                 this.notifier.updateView();
                 if(this.win())
                     handleWin(this.onTurn);
