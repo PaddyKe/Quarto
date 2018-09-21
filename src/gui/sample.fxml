@@ -28,8 +28,8 @@
          </children></TilePane>
       <Canvas fx:id="gameField" height="582.0" onMouseClicked="#gameFieldClicked" width="583.0" />
       <ImageView fx:id="selectedFigure" fitHeight="200.0" fitWidth="200.0" layoutX="657.0" layoutY="371.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="63.0" />
-      <Label fx:id="playerLabel" alignment="TOP_CENTER" layoutX="659.0" layoutY="326.0" prefHeight="17.0" prefWidth="200.0" text="[Player]" textAlignment="CENTER" />
-      <Label fx:id="messageLabel" alignment="TOP_CENTER" layoutX="657.0" layoutY="343.0" prefHeight="17.0" prefWidth="200.0" text="Wähle eine Figur" textAlignment="CENTER" />
+      <Label fx:id="playerLabel" alignment="TOP_CENTER" layoutX="635.0" layoutY="326.0" prefHeight="17.0" prefWidth="245.0" text="[Player]" textAlignment="CENTER" />
+      <Label fx:id="messageLabel" alignment="TOP_CENTER" layoutX="635.0" layoutY="343.0" prefHeight="17.0" prefWidth="245.0" text="Wähle eine Figur" textAlignment="CENTER" />
       <Button fx:id="applyButton" layoutX="860.0" layoutY="548.0" mnemonicParsing="false" onMouseClicked="#applyButton" prefHeight="25.0" prefWidth="50.0" text="Bestätigen" />
    </children>
 </AnchorPane>
