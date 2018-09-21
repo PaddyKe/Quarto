@@ -8,6 +8,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class PerfectKI extends Player {
+    private static int counter = 0;
+
     private static final Predicate<Figure> EXCLUDE_ROUND = x -> !x.isRound();
     private static final Predicate<Figure> EXCLUDE_SQUARE = x -> x.isRound();
     private static final Predicate<Figure> EXCLUDE_HOLES = x -> !x.hasHole();
@@ -30,14 +32,16 @@ public class PerfectKI extends Player {
 
 
     public PerfectKI() {
-        super("PerfectKI");
+        super("PerfectKI" + ((counter++ == 0) ? "" : ("" + counter)));
         this.filters = new HashSet<Predicate<Figure>>();
     }
 
     @Override
     public Figure selectFigure(List<Figure> remaining, Figure[] board) {
+        this.setFilters(clone(board));
         if(remaining.size() == 0) return null;
         List<Figure> allowedFigures = remaining.stream().filter(allFilters).collect(Collectors.toList());
+
         if(remaining.size() > 0 && allowedFigures.size() == 0) // well... i have lost :(
             return remaining.get(0);
         else {
@@ -52,11 +56,13 @@ public class PerfectKI extends Player {
         List<int[]> possibleWins = possibleWinningSituations(state);
 
         List<Integer> remainingField = new ArrayList<Integer>();
+
         for (int i = 0; i < state.length; i++) {    // get all possible moves
             if(state[i] == null)
                 remainingField.add(i);
         }
         if(remainingField.size() == 0) return -1;   // this sould later not occur. this means we got a draw
+
 
         //System.out.println(possibleWins);
 
@@ -68,7 +74,6 @@ public class PerfectKI extends Player {
                 //System.out.println(place);
                 winChecker[temp[place]] = f;
                 if(Figure.hasGeneInCommon(winChecker[temp[0]], winChecker[temp[1]], winChecker[temp[2]], winChecker[temp[3]])) {
-                    this.setFilters(winChecker);
                     return temp[place];
                 } else {
                     winChecker[place] = null;
@@ -81,12 +86,10 @@ public class PerfectKI extends Player {
             //TODO i should also set the filters (maybe in a own method?!)
             int[] temp = possibleWins.get(0);
             state[temp[temp[temp.length - 1]]] = f;
-            this.setFilters(state);
-            return possibleWins.get(0)[4];
+            return temp[temp[temp.length - 1]];
         } else { // there are no situations which are "usefull", so make a random move
             int move = remainingField.get(this.rnd.nextInt(remainingField.size())); // make a random move from all possible moves
             state[move] = f;
-            this.setFilters(state);
             return move;
         }
 
