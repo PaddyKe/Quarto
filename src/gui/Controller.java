@@ -11,10 +11,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.WindowEvent;
 import player.HumanPlayer;
 import player.PerfectKI;
@@ -75,8 +77,12 @@ public class Controller implements Initializable, PlayerNotificatior {
     private GraphicsContext drawer;
 
     private Board board;
-
+    private Image defaultBackgound;
     private static final int FIGURE_SIZE = 75;
+
+    private static final boolean DISABLE_ACCEPT_BUTTON = true;
+
+
 
 
     public void shutdown(WindowEvent event) {
@@ -86,9 +92,11 @@ public class Controller implements Initializable, PlayerNotificatior {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //this.figures.disableProperty().bind(Bindings.not(Bindings.equal("Wähle eine Figur", messageLabel.textProperty())));
+        this.applyButton.setDisable(DISABLE_ACCEPT_BUTTON);
         this.drawer = gameField.getGraphicsContext2D();
         try {
-            this.drawer.drawImage(SwingFXUtils.toFXImage(ImageIO.read(this.getClass().getResource("/resources/background.png")), null), 0, 0);
+            this.defaultBackgound = SwingFXUtils.toFXImage(ImageIO.read(this.getClass().getResource("/resources/background.png")), null);
+            this.drawer.drawImage(this.defaultBackgound, 0, 0);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -102,7 +110,9 @@ public class Controller implements Initializable, PlayerNotificatior {
 
 
         // das ist der interessante part:
-        initGame(new HumanPlayer(), new PerfectKI(), FIGURE_SIZE);
+        initGame(new HumanPlayer("Fiona"), new PerfectKI(), FIGURE_SIZE);
+        //initGame(new HumanPlayer("Patrick"), new HumanPlayer("Fiona"), FIGURE_SIZE);
+
         // ab jetzt duerfte es wieder uninterssant werden.
 
         this.drawField(FIGURE_SIZE);
@@ -151,13 +161,19 @@ public class Controller implements Initializable, PlayerNotificatior {
     public void figureSelect(MouseEvent mouseEvent) {
         int index = Integer.parseInt(((ImageView)mouseEvent.getSource()).getId().replaceAll("figure", ""));
         this.board.handleFigureClick(index);
+        if(DISABLE_ACCEPT_BUTTON) this.applyButton(mouseEvent);
     }
 
     public void gameFieldClicked(MouseEvent mouseEvent) {
-        //System.out.println(mouseEvent);
-        int index = Controller.mousePositionToIndex((int)mouseEvent.getX(), (int)mouseEvent.getY());
-        if(index > -1)
-            this.board.handleFieldClick(index);
+        if(!this.board.gameRunning) {
+            this.restart();
+        } else {
+            //System.out.println(mouseEvent);
+            int index = Controller.mousePositionToIndex((int) mouseEvent.getX(), (int) mouseEvent.getY());
+            if (index > -1)
+                this.board.handleFieldClick(index);
+            if (DISABLE_ACCEPT_BUTTON) this.applyButton(mouseEvent);
+        }
     }
 
     public void applyButton(MouseEvent mouseEvent) {
@@ -166,12 +182,6 @@ public class Controller implements Initializable, PlayerNotificatior {
 
     @Override
     public void notifyPlayer(String notification) {
-        if(notification.contains("gewonnen")) {
-            this.playerLabel.setTextFill(Color.RED);
-            this.messageLabel.setTextFill(Color.RED);
-        } else {
-            this.messageLabel.setTextFill(Color.BLACK);
-        }
         this.messageLabel.setText(notification);
     }
 
@@ -190,6 +200,21 @@ public class Controller implements Initializable, PlayerNotificatior {
     @Override
     public void setPlayer(String name) {
         this.playerLabel.setText(name);
+    }
+
+    @Override
+    public void showWin(int[] fields) {
+        this.drawer.setFill(Color.RED);
+        for(int i : fields) {
+            int[] pos = indexToCoordinates(i, FIGURE_SIZE);
+            this.drawer.fillOval(pos[0] + FIGURE_SIZE / 3, pos[1] + FIGURE_SIZE / 3, 25, 25);
+        }
+    }
+
+    @Override
+    public void setStyle(Paint p) {
+        this.messageLabel.setTextFill(p);
+        this.playerLabel.setTextFill(p);
     }
 
     private static int mousePositionToIndex(int x, int y) {
@@ -272,6 +297,9 @@ public class Controller implements Initializable, PlayerNotificatior {
 
     public void restart() {
         //this.board = new Board(this.board.getP1(), this.board.getP2(), this);
+        this.playerLabel.setTextFill(Color.BLACK);
+        this.messageLabel.setTextFill(Color.BLACK);
+        this.drawer.drawImage(this.defaultBackgound, 0, 0);
         initGame(this.board.getP1(), this.board.getP2(), FIGURE_SIZE);
     }
 
