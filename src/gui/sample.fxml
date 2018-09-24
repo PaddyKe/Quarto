@@ -35,15 +35,15 @@
         <menus>
           <Menu mnemonicParsing="false" text="_Gegner">
             <items>
-                  <RadioMenuItem fx:id="opponentPVP" mnemonicParsing="false" onAction="#selectOpponent" selected="true" text="1 vs. 1">
+                  <RadioMenuItem fx:id="opponentPVP" mnemonicParsing="true" onAction="#selectOpponent" selected="true" text="1 vs. _1">
                      <toggleGroup>
                         <ToggleGroup fx:id="opponent" />
                      </toggleGroup>
                   </RadioMenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" text="Computer Gegner" />
-                  <RadioMenuItem fx:id="opponentRandom" mnemonicParsing="false" onAction="#selectOpponent" text="du vs. Rainer Zufall" toggleGroup="$opponent" />
-                  <RadioMenuItem fx:id="opponentNotStupid" mnemonicParsing="false" onAction="#selectOpponent" text="du vs. Hein (nicht) Blöd" />
-                  <RadioMenuItem fx:id="opponentTheMaster" mnemonicParsing="false" onAction="#selectOpponent" text="du vs. &quot;The Master&quot;" />
+                  <RadioMenuItem fx:id="opponentRandom" mnemonicParsing="true" onAction="#selectOpponent" text="du vs. _Rainer Zufall" toggleGroup="$opponent" />
+                  <RadioMenuItem fx:id="opponentNotStupid" mnemonicParsing="true" onAction="#selectOpponent" text="du vs. _Hein (nicht) Blöd" />
+                  <RadioMenuItem fx:id="opponentTheMaster" mnemonicParsing="true" onAction="#selectOpponent" text="du vs. &quot;_The Master&quot;" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="_Name">
@@ -51,6 +51,11 @@
               <MenuItem fx:id="nameSetter" mnemonicParsing="false" onAction="#setPlayerName" text="Kein Name" />
             </items>
           </Menu>
+            <Menu fx:id="about" mnemonicParsing="false" text="_Hilfe">
+               <items>
+                  <MenuItem mnemonicParsing="true" onAction="#showInstructions" text="_Anleitung" />
+                  <MenuItem mnemonicParsing="true" onAction="#showAbout" text="_Über" />
+               </items></Menu>
         </menus>
       </MenuBar>
    </children>
