@@ -86,7 +86,6 @@ public class Board {
 
         // rows and columns
         for (int i = 0; i < 4; i++) {
-
             winns |= Figure.hasGeneInCommon(this.board[(i * 4)], this.board[(i * 4) + 1], this.board[(i * 4) + 2], this.board[(i * 4) + 3]);
             winns |= Figure.hasGeneInCommon(this.board[i], this.board[i + 4], this.board[i + 8], this.board[i + 12]);
             if (winns)
