@@ -36,6 +36,13 @@ public class HumanPlayer extends Player {
     }
 
     @Override
+    public void reset() {
+        this.playerState = State.NONE;
+        this.field = -1;
+        this.figure = -1;
+    }
+
+    @Override
     public int placeFigure(Figure f, Figure[][] board, List<Figure> remaining) {
         int row = (this.field / 4);
         int col = this.field % 4;

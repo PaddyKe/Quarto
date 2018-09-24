@@ -90,6 +90,8 @@ public abstract class Player {
 		return null;
 	}
 
+	public void reset() { }
+
 	@Override
 	public boolean equals(Object o) {
 		if(o == null) return false;

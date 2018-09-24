@@ -319,7 +319,11 @@ public class Controller implements Initializable, PlayerNotificatior {
         this.playerLabel.setTextFill(Color.BLACK);
         this.messageLabel.setTextFill(Color.BLACK);
         this.drawer.drawImage(this.defaultBackgound, 0, 0);
-        initGame(this.board.getP1(), this.board.getP2(), FIGURE_SIZE);
+        Player p1 = this.board.getP1();
+        Player p2 = this.board.getP2();
+        p1.reset();
+        p2.reset();
+        initGame(p1, p2, FIGURE_SIZE);
     }
 
     public void setPlayerName(ActionEvent actionEvent) {
