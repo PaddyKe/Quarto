@@ -18,7 +18,7 @@ public abstract class Player {
 			"Eutropia", "Eva Adam", "Eva N.Gelium", "Fanny Knödel", "Fifi Trixibelle", "Florida", "Frank Reich", "Frankobert", "Franz Brandwein",
 			"Franz Mann", "Franz Ohse", "Georg Asmus", "Gerd Nehr", "Gerold Steiner", "Gracie Fan", "Gregor Janisch", "Grier Hammond Henchy",
 			"Gutfried Wurst", "Hans A. Bier", "Hans Dampf", "Hans Maul", "Hans Wurst", "Harlow Winter Kate", "Harry Bo", "Hasta La vista",
-			"Heavenly Hiraani Tiger Lily", "Heide Witzka", "Heidi Kraut", "Hein Blöd", "Heinz Ellmann", "Heinz Elmann", "Heinz Fiction", "Hella Kot",
+			"Heavenly Hiraani Tiger Lily", "Heide Witzka", "Heidi Kraut", "Heinz Ellmann", "Heinz Elmann", "Heinz Fiction", "Hella Kot",
 			"Hella Wahnsinn", "Henry Günther Ademola Dashtu Samuel", "Herr Bert Herbert", "Herta Wurst", "Herta Zuschlag", "Hugo Slawien", "Ireland Eliesse",
 			"Jake Daniel", "James Bond", "Jesus Halleluja", "Jim Panse", "Jimi Blue", "Jo Ghurt", "Jo Ker", "Johannes Beer", "Johannes Brodt", "Johannes Burg",
 			"Johannes Kraut", "Johannis Bär", "Johannis Burg", "John Glör", "John Jack", "Johnny Walker", "K. Melle", "Kai Mauer", "Kai Sehr", "Kai Ser", "Karel Ofen",
@@ -28,7 +28,7 @@ public abstract class Player {
 			"Mark Graf", "Markus Platz", "Marta Pfahl", "Martha Hari", "Mary Huana", "Melitta Mann", "Mira Bellenbaum", "Miss Raten", "Muh Barack",
 			"Nick Olaus", "Olga Machslochoff", "Olle Schleuder", "Otto Päde", "Pan Tau", "Paul Ahner", "Paul Lahner", "Peer Verser", "Pepsi-Carola",
 			"Perry Ode", "Peter Pan", "Peter Petersilie", "Peter Silie", "Phil Fraß", "Philip Morris", "Polly Zist", "Rainer Hohn", "Rainer Müll",
-			"Rainer Stoff", "Rainer Verlust", "Rainer Wein", "Rainer Zufall", "Reiner Korn", "Reiner Zorn", "Reiner Zufall", "Rob Otter",
+			"Rainer Stoff", "Rainer Verlust", "Rainer Wein", "Reiner Korn", "Reiner Zorn", "Reiner Zufall", "Rob Otter",
 			"Roman Schreiber", "Roman Ticker", "Roman Tisch", "Ron Dell", "Rosa Fingernagel", "Rosa Fleisch", "Rosa Himmel", "Rosa Hirn",
 			"Rosa Panter", "Rosa Rosenbusch", "Rosa Roth", "Rosa Schwein", "Rosa Wolke", "Rosa Wurst", "Rosi Ne", "Rudi Mentation", "Sham Paine",
 			"Speck Wildhorse", "Sunny Täter", "Teddy Baer", "Thor Schuß", "Tim Buktu", "Tscherno Bill", "Ute Russ", "Wilma Bier", "Wilma Gern",
@@ -88,6 +88,15 @@ public abstract class Player {
 
 	public Figure selectFigure(List<Figure> remaining, Figure[][] board) {
 		return null;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if(o == null) return false;
+		if(o == this) return true;
+		if(!(o instanceof Player)) return false;
+		Player p = (Player) o;
+		return p.name.equals(this.name);
 	}
 
 }
