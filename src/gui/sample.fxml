@@ -29,7 +29,7 @@
       <ImageView fx:id="selectedFigure" fitHeight="200.0" fitWidth="200.0" layoutX="657.0" layoutY="371.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="63.0" />
       <Label fx:id="playerLabel" alignment="TOP_CENTER" layoutX="635.0" layoutY="351.0" prefHeight="17.0" prefWidth="245.0" text="[Player]" textAlignment="CENTER" />
       <Label fx:id="messageLabel" alignment="TOP_CENTER" layoutX="635.0" layoutY="369.0" prefHeight="17.0" prefWidth="245.0" text="Wähle eine Figur" textAlignment="CENTER" />
-      <Button fx:id="applyButton" layoutX="860.0" layoutY="548.0" mnemonicParsing="false" onMouseClicked="#applyButton" prefHeight="25.0" prefWidth="50.0" text="Bestätigen" />
+      <Button fx:id="applyButton" layoutX="860.0" layoutY="548.0" mnemonicParsing="false" onMouseClicked="#applyButton" prefHeight="25.0" prefWidth="50.0" text="Bestätigen" visible="false" />
 
       <MenuBar prefHeight="25.0" prefWidth="920.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
