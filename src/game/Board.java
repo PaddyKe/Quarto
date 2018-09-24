@@ -35,15 +35,15 @@ public class Board {
             @Override
             public void run() {
                 while(gameRunning) {
-                    if(win()) {
+                    if(isOver()) {
                         gameRunning = false;
-                        handleWin(onTurn);
+                        handleEnd(onTurn);
                     }
                 }
             }
         });
         //t.setDaemon(true);
-        t.start();
+        //t.start();
 
         this.p1 = p1;
         this.p2 = p2;
@@ -153,8 +153,8 @@ public class Board {
                         this.firstRound = false;
                         this.round++;
                         this.notifier.updateView();
-                        if(this.win())
-                            handleWin(this.onTurn);
+                        if(this.isOver())
+                            handleEnd(this.onTurn);
                         else
                             this.nextRound();
                         return;
@@ -164,8 +164,8 @@ public class Board {
                 this.round++;
                 this.firstRound = false;
                 this.notifier.updateView();
-                if(this.win())
-                    handleWin(this.onTurn);
+                if(this.isOver())
+                    handleEnd(this.onTurn);
                 else
                     this.nextRound();
                 return;
@@ -182,6 +182,10 @@ public class Board {
 				this.selectedFigure = null;
                 this.notifier.updateView();
                 //let the user know to select a fugure
+                if(this.isOver()) {
+                    this.handleEnd(this.onTurn);
+                    return;
+                }
                 this.notifier.setPlayer(this.onTurn.getName());
                 this.notifier.notifyPlayer(onTurn.getName() + " Bitte wähle eine Figur!");
                 hp.playerState = State.PLACED_FIGURE;
@@ -192,8 +196,8 @@ public class Board {
                 this.notifier.resetNotification();
                 this.inRound = false;
                 this.notifier.updateView();
-                if(this.win())
-                    handleWin(this.onTurn);
+                if(this.isOver())
+                    handleEnd(this.onTurn);
                 else
                     this.nextRound();
                 return;
@@ -220,8 +224,8 @@ public class Board {
                 //this.placeFigure(this.selectedFigure, this.onTurn);
 				this.selectFigure(this.onTurn.selectFigure(this.getRemainingFigures(), this.get1DBoard()));
                 this.notifier.updateView();
-                if(this.win())
-                    handleWin(this.onTurn);
+                if(this.isOver())
+                    handleEnd(this.onTurn);
                 else
                     this.nextRound();
             } else {
@@ -343,7 +347,29 @@ public class Board {
         this.p2 = p;
     }
 
-    private void handleWin(Player lastMove) {
+    private boolean simpleDraw() {
+        int counter = 0;
+        for(Figure f : this.board) {
+            if(f == null)
+                counter++;
+        }
+        return counter == 0 && !this.win();
+    }
+    
+    private boolean draw() {
+        int counter = 0;
+        for(Figure f : this.board) {
+            if(f == null)
+                counter++;
+        }
+        return counter == 0;
+    }
+    
+    private boolean isOver() {
+        return this.draw() || this.win();
+    }
+    
+    private void handleEnd(Player lastMove) {
         if(this.win()) {
             this.gameRunning = false;
             Platform.runLater(() -> this.notifier.setStyle(Color.RED));
@@ -352,6 +378,11 @@ public class Board {
             System.out.println(lastMove.getName() + " hat gewonnen");
             //System.out.println(Arrays.toString(this.getWinningSituation()));
             Platform.runLater(() -> this.notifier.showWin(this.getWinningSituation()));
+        } else if(this.simpleDraw()) {
+            this.gameRunning = false;
+            Platform.runLater(() -> this.notifier.setStyle(Color.YELLOW));
+            Platform.runLater(() -> this.notifier.setPlayer("Unentschieden..."));
+            Platform.runLater(() -> this.notifier.notifyPlayer("Klicke auf das Feld um neu zu beginnen."));
         }
     }
 
