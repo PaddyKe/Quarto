@@ -310,7 +310,39 @@ public class Board {
 
         return null;
     }
-    
+
+    public Player getHumanPlayer() {
+        if (this.p1 instanceof HumanPlayer)
+            return this.p1;
+        else if(this.p2 instanceof HumanPlayer)
+            return this.p2;
+        else
+            return null;
+    }
+
+    public boolean is101() {
+        return this.p1 instanceof HumanPlayer && this.p2 instanceof HumanPlayer;
+    }
+
+    public Player getNotOnTurn() {
+        if(this.p2.equals(this.onTurn))
+            return p1;
+        else
+            return p2;
+    }
+
+    public void setP1(Player p) {
+        if(this.onTurn.equals(p1))
+            this.onTurn = p;
+        this.p1 = p;
+    }
+
+    public void setP2(Player p) {
+        if(this.onTurn.equals(p))
+            this.onTurn = p;
+        this.p2 = p;
+    }
+
     private void handleWin(Player lastMove) {
         if(this.win()) {
             this.gameRunning = false;
