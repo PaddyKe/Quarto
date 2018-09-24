@@ -27,6 +27,8 @@ import player.TheMaster;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -383,5 +385,19 @@ public class Controller implements Initializable, PlayerNotificatior {
         }
 
 
+    }
+
+    public void showAbout(ActionEvent actionEvent) {
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        ((Stage) a.getDialogPane().getScene().getWindow()).getIcons().add(new Image(getClass().getResourceAsStream("/resources/icon.png")));
+        a.setTitle("Über");
+        a.setHeaderText("Quarto von Patrick Kempf");
+        a.setContentText("Dieses Spiel basiert auf dem gleichnamigen Brettspiel \"Quarto!\" (siehe https://de.wikipedia.org/wiki/Quarto!).\n\n" +
+                         "Die PC-Version wurde von Patrick Kempf entwickelt und ist frei über GitHub (https://github.com/PaddyKe/Quarto) unter der MIT-Lizenz erhältlich.\n\n Viel Spaß beim Spielen");
+        a.showAndWait();
+    }
+
+    public void showInstructions(ActionEvent actionEvent) throws URISyntaxException, IOException {
+        java.awt.Desktop.getDesktop().browse(new URI("https://github.com/PaddyKe/Quarto/blob/rules/Rules.md"));
     }
 }
