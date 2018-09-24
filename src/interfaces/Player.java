@@ -28,7 +28,7 @@ public abstract class Player {
 			"Mark Graf", "Markus Platz", "Marta Pfahl", "Martha Hari", "Mary Huana", "Melitta Mann", "Mira Bellenbaum", "Miss Raten", "Muh Barack",
 			"Nick Olaus", "Olga Machslochoff", "Olle Schleuder", "Otto Päde", "Pan Tau", "Paul Ahner", "Paul Lahner", "Peer Verser", "Pepsi-Carola",
 			"Perry Ode", "Peter Pan", "Peter Petersilie", "Peter Silie", "Phil Fraß", "Philip Morris", "Polly Zist", "Rainer Hohn", "Rainer Müll",
-			"Rainer Stoff", "Rainer Verlust", "Rainer Wein", "Reiner Korn", "Reiner Zorn", "Reiner Zufall", "Rob Otter",
+			"Rainer Stoff", "Rainer Verlust", "Rainer Wein", "Reiner Korn", "Reiner Zorn", "Reiner Zufall", "Rob Otter", "Nimsi Hartmann",
 			"Roman Schreiber", "Roman Ticker", "Roman Tisch", "Ron Dell", "Rosa Fingernagel", "Rosa Fleisch", "Rosa Himmel", "Rosa Hirn",
 			"Rosa Panter", "Rosa Rosenbusch", "Rosa Roth", "Rosa Schwein", "Rosa Wolke", "Rosa Wurst", "Rosi Ne", "Rudi Mentation", "Sham Paine",
 			"Speck Wildhorse", "Sunny Täter", "Teddy Baer", "Thor Schuß", "Tim Buktu", "Tscherno Bill", "Ute Russ", "Wilma Bier", "Wilma Gern",
