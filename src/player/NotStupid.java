@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class PerfectKI extends Player {
+public class NotStupid extends Player {
     private static int counter = 0;
 
     private static final Predicate<Figure> EXCLUDE_ROUND = x -> !x.isRound();
@@ -31,8 +31,8 @@ public class PerfectKI extends Player {
     };
 
 
-    public PerfectKI() {
-        super("PerfectKI" + ((counter++ == 0) ? "" : ("" + counter)));
+    public NotStupid() {
+        super("Hein (nicht) Blöd" + ((counter++ == 0) ? "" : ("" + counter)));
         this.filters = new HashSet<Predicate<Figure>>();
     }
 
@@ -45,8 +45,6 @@ public class PerfectKI extends Player {
         if(remaining.size() > 0 && allowedFigures.size() == 0) // well... i have lost :(
             return remaining.get(0);
         else {
-            // TODO think about a better stratergy... (maybe look that i choose a figure so that a winning situation could be created)
-
             return allowedFigures.get(this.rnd.nextInt(allowedFigures.size()));
         }
     }
@@ -82,8 +80,6 @@ public class PerfectKI extends Player {
         }
 
         if(possibleWins.size() > 0) {  // cant win anything with the given figure, but maybe we can destoy a winnig situarion
-            //TODO i should try to make a move, that doesn't creates a "bad situation" (a situation in which the other player can winn with every figure)
-            //TODO i should also set the filters (maybe in a own method?!)
             int[] temp = possibleWins.get(0);
             state[temp[temp[temp.length - 1]]] = f;
             return temp[temp[temp.length - 1]];
