@@ -6,5 +6,5 @@ Die Übereinstimmung muss nur in einem Merkmal vorkommen.
 # Regeln
 [Regeln siehe Beschreibung](https://github.com/PaddyKe/Quarto/blob/rules/Rules.md)
 
-#### Vorraussetzungen
+## Vorraussetzungen
 Zum spielen wird mindestens die [Java 10 JRE](https://www.oracle.com/technetwork/java/javase/downloads/jre10-downloads-4417026.html) benötigt.
