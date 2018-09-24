@@ -5,26 +5,30 @@ import game.Figure;
 import interfaces.Player;
 import interfaces.PlayerNotificatior;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import player.HumanPlayer;
-import player.PerfectKI;
+import player.NotStupid;
+import player.RandomPlayer;
+import player.TheMaster;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable, PlayerNotificatior {
@@ -73,6 +77,19 @@ public class Controller implements Initializable, PlayerNotificatior {
     private Canvas gameField;
     @FXML
     private Label playerLabel;
+    @FXML
+    private MenuItem nameSetter;
+    @FXML
+    private RadioMenuItem opponentPVP;
+    @FXML
+    private RadioMenuItem opponentRandom;
+    @FXML
+    private RadioMenuItem opponentNotStupid;
+    @FXML
+    private RadioMenuItem opponentTheMaster;
+
+
+
 
     private GraphicsContext drawer;
 
@@ -110,11 +127,11 @@ public class Controller implements Initializable, PlayerNotificatior {
 
 
         // das ist der interessante part:
-        initGame(new HumanPlayer("Fiona"), new PerfectKI(), FIGURE_SIZE);
-        //initGame(new HumanPlayer("Patrick"), new HumanPlayer("Fiona"), FIGURE_SIZE);
+        //initGame(new HumanPlayer("Fiona"), new NotStupid(), FIGURE_SIZE);
+        initGame(new HumanPlayer(), new HumanPlayer(), FIGURE_SIZE);
 
         // ab jetzt duerfte es wieder uninterssant werden.
-
+        this.nameSetter.setText(this.board.getHumanPlayer().getName());
         this.drawField(FIGURE_SIZE);
     }
 
@@ -303,4 +320,68 @@ public class Controller implements Initializable, PlayerNotificatior {
         initGame(this.board.getP1(), this.board.getP2(), FIGURE_SIZE);
     }
 
+    public void setPlayerName(ActionEvent actionEvent) {
+        Player hp;
+        if(this.board.is101())
+            hp = this.board.getLastPlayer();
+        else
+            hp = this.board.getHumanPlayer();
+
+        String oldName = hp.getName();
+
+        TextInputDialog dialog = new TextInputDialog(hp.getName());
+        ((Stage) dialog.getDialogPane().getScene().getWindow()).getIcons().add(new Image(getClass().getResourceAsStream("/resources/icon.png")));
+        dialog.setTitle("Name festlegen");
+        dialog.setHeaderText("Bitte gebe dir einen Namen");
+        dialog.setContentText("Name: ");
+        Optional<String> name = dialog.showAndWait();
+        name.ifPresent(n -> hp.setName(n));
+        this.nameSetter.setText(hp.getName());
+        if(this.playerLabel.getText().equals(oldName)) this.playerLabel.setText(hp.getName());
+    }
+
+    public void selectOpponent(ActionEvent actionEvent) {
+
+        RadioMenuItem selected = (RadioMenuItem) actionEvent.getSource();
+
+        if(selected.equals(this.opponentPVP)) {
+            if(!(this.board.getP1() instanceof HumanPlayer))
+                this.board.setP1(new HumanPlayer());
+            if(!(this.board.getP2() instanceof HumanPlayer))
+                this.board.setP2(new HumanPlayer());
+
+
+
+
+        } else if(selected.equals(this.opponentRandom)){
+            Player not = this.board.getNotOnTurn(); // not -> not on turn
+            if(not.equals(this.board.getP1()))
+                this.board.setP1(new RandomPlayer());
+            else
+                this.board.setP2(new RandomPlayer());
+
+
+
+
+        } else if(selected.equals(opponentNotStupid)) {
+            Player not = this.board.getNotOnTurn(); // not -> not on turn
+            if(not.equals(this.board.getP1()))
+                this.board.setP1(new NotStupid());
+            else
+                this.board.setP2(new NotStupid());
+
+
+
+        } else if(selected.equals(this.opponentTheMaster)) {
+            Player not = this.board.getNotOnTurn(); // not -> not on turn
+            if(not.equals(this.board.getP1()))
+                this.board.setP1(new TheMaster());
+            else
+                this.board.setP2(new TheMaster());
+
+
+        }
+
+
+    }
 }
