@@ -4,6 +4,7 @@ import game.Board;
 import game.Figure;
 import interfaces.Player;
 import interfaces.PlayerNotificatior;
+import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +23,7 @@ import javafx.stage.WindowEvent;
 import player.HumanPlayer;
 import player.NotStupid;
 import player.RandomPlayer;
-import player.TheMaster;
+import player.minimax.MiniMaxPlayer;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -88,7 +89,7 @@ public class Controller implements Initializable, PlayerNotificatior {
     @FXML
     private RadioMenuItem opponentNotStupid;
     @FXML
-    private RadioMenuItem opponentTheMaster;
+    private RadioMenuItem opponentMiniMax;
 
 
 
@@ -111,6 +112,7 @@ public class Controller implements Initializable, PlayerNotificatior {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //this.figures.disableProperty().bind(Bindings.not(Bindings.equal("Wähle eine Figur", messageLabel.textProperty())));
+        Platform.setImplicitExit(true);
         this.applyButton.setDisable(DISABLE_ACCEPT_BUTTON);
         this.drawer = gameField.getGraphicsContext2D();
         try {
@@ -319,6 +321,7 @@ public class Controller implements Initializable, PlayerNotificatior {
         this.playerLabel.setTextFill(Color.BLACK);
         this.messageLabel.setTextFill(Color.BLACK);
         this.drawer.drawImage(this.defaultBackgound, 0, 0);
+        this.selectedFigure.setImage(null);
         Player p1 = this.board.getP1();
         Player p2 = this.board.getP2();
         p1.reset();
@@ -378,12 +381,12 @@ public class Controller implements Initializable, PlayerNotificatior {
 
 
 
-        } else if(selected.equals(this.opponentTheMaster)) {
+        } else if(selected.equals(this.opponentMiniMax)) {
             Player not = this.board.getNotOnTurn(); // not -> not on turn
             if(not.equals(this.board.getP1()))
-                this.board.setP1(new TheMaster());
+                this.board.setP1(new MiniMaxPlayer());
             else
-                this.board.setP2(new TheMaster());
+                this.board.setP2(new MiniMaxPlayer());
 
 
         }
@@ -403,5 +406,10 @@ public class Controller implements Initializable, PlayerNotificatior {
 
     public void showInstructions(ActionEvent actionEvent) throws URISyntaxException, IOException {
         java.awt.Desktop.getDesktop().browse(new URI("https://github.com/PaddyKe/Quarto/blob/rules/Rules.md"));
+    }
+
+    public void quit(ActionEvent actionEvent) {
+        this.shutdown(null);
+        Platform.exit();
     }
 }
