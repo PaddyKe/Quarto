@@ -52,7 +52,7 @@
                   <RadioMenuItem fx:id="opponentMiniMax" mnemonicParsing="true" onAction="#selectOpponent" text="du vs. Kleiner Max" toggleGroup="$opponent" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="_Name">
+          <Menu mnemonicParsing="false" onShowing="#updateName" text="_Name">
             <items>
               <MenuItem fx:id="nameSetter" mnemonicParsing="false" onAction="#setPlayerName" text="Kein Name" />
             </items>

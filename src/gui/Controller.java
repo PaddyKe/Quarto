@@ -7,6 +7,7 @@ import interfaces.PlayerNotificatior;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -411,5 +412,9 @@ public class Controller implements Initializable, PlayerNotificatior {
     public void quit(ActionEvent actionEvent) {
         this.shutdown(null);
         Platform.exit();
+    }
+
+    public void updateName(Event event) {
+        this.nameSetter.setText(this.board.getLastPlayer().getName());
     }
 }
