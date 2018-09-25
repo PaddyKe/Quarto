@@ -178,5 +178,10 @@ public class Figure {
 
         return simulatities;
     }
-    
+
+    @Override
+    public String toString() {
+        return this.genome + "";
+    }
+
 }
