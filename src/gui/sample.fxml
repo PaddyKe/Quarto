@@ -33,6 +33,12 @@
 
       <MenuBar prefHeight="25.0" prefWidth="920.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
+            <Menu mnemonicParsing="true" text="_Spiel">
+              <items>
+                <MenuItem onAction="#quit" text="_Beenden" />
+                  <MenuItem onAction="#restart" text="_Neustart" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="_Gegner">
             <items>
                   <RadioMenuItem fx:id="opponentPVP" mnemonicParsing="true" onAction="#selectOpponent" selected="true" text="1 vs. _1">
@@ -42,8 +48,8 @@
                   </RadioMenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" text="Computer Gegner" />
                   <RadioMenuItem fx:id="opponentRandom" mnemonicParsing="true" onAction="#selectOpponent" text="du vs. _Rainer Zufall" toggleGroup="$opponent" />
-                  <RadioMenuItem fx:id="opponentNotStupid" mnemonicParsing="true" onAction="#selectOpponent" text="du vs. _Hein (nicht) Blöd" />
-                  <RadioMenuItem fx:id="opponentTheMaster" mnemonicParsing="true" onAction="#selectOpponent" text="du vs. &quot;_The Master&quot;" />
+                  <RadioMenuItem fx:id="opponentNotStupid" mnemonicParsing="true" onAction="#selectOpponent" text="du vs. _Hein (nicht) Blöd" toggleGroup="$opponent" />
+                  <RadioMenuItem fx:id="opponentMiniMax" mnemonicParsing="true" onAction="#selectOpponent" text="du vs. Kleiner Max" toggleGroup="$opponent" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="_Name">
