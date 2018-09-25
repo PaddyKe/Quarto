@@ -286,7 +286,7 @@ public class Board {
         return this.onTurn;
     }
 
-    public int[] getWinningSituation() {
+    private int[] getWinningSituation() {
         if(Figure.hasGeneInCommon(this.board[0], this.board[5], this.board[10], this.board[15]))
             return new int[] {0, 5, 10, 15};
 
