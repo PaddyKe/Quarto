@@ -1,4 +1,4 @@
-# ![downloads](https://img.shields.io/github/downloads/paddyke/Quarto/total.svg)
+# [![downloads](https://img.shields.io/github/downloads/paddyke/Quarto/total.svg)](https://github.com/PaddyKe/Quarto/releases/latest)
 
 # Quarto
 Quarto ist ein Brettspiel für 2 Personen. Ziel dieses Strategie-Spieles ist die Bildung einer Vierer-Reihe oder eines Quadrates mit einem gemeinsamen Merkmal. Die 16 Figuren unterscheiden sich in 4 Merkmalen
