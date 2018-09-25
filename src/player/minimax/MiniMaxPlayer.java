@@ -34,7 +34,7 @@ public class MiniMaxPlayer extends Player {
         if(numRemSpots > 12) {
             return this.m.placeFigure(f, board, remaining);     // way to much to calculate...
         } else if(numRemSpots <= 12 && numRemSpots > 7) {
-            this.depth = 1;
+            this.depth = 3;
         } else if(numRemSpots <= 7 && numRemSpots > 1) {
             this.depth = 8;
         } else {
