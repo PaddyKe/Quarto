@@ -20,7 +20,7 @@ Nach dem Start des Spiels kann unter dem Menüpunkt *Gegner* der Gegner bzw. die
 1 vs.1 ist der einzige Spielmodus bei dem zwei Menschen gegeneinander spielen können.
 
 #### 1 vs. ...
-Bei 1 vs. ... Spielen, spielt jeweils ein menschlicher Spieler (du) gegen einen, durch den Computer gespielten Spieler. Diese sind (mehr oder weniger) absteigend nach Schwiehrigkeit sortiert (je weiter unten desto schwerer).
+Bei 1 vs. ... Spielen, spielt jeweils ein menschlicher Spieler (du) gegen einen, durch den Computer gespielten Spieler. Diese sind (mehr oder weniger) absteigend nach Schwierigkeit sortiert (je weiter unten desto schwerer).
 
 ### Name
 Unter dem Menüpunkt *Name* kann man (im falle eines 1 vs. 1 Spiels) den Namen des aktuellen Spielers ändern. Bei Spielen gegen den Computer lässt sich nur der eigene Name ändern.
