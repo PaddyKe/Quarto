@@ -7,6 +7,10 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+/*
+  Wins if it is possible.
+*/
+
 public class NotStupid extends Player {
     private static int counter = 0;
 
