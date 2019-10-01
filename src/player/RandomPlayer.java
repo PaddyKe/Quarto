@@ -6,6 +6,10 @@ import interfaces.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+  Plays random moves.
+*/
+
 public class RandomPlayer extends Player {
 
     public RandomPlayer() {
