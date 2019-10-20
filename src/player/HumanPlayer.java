@@ -5,6 +5,11 @@ import interfaces.Player;
 
 import java.util.List;
 
+/*
+ This class provides a Interfce for two humans to play against each other.
+ Currently playing via network is not supported.
+*/
+
 public class HumanPlayer extends Player {
 
     public enum State {
