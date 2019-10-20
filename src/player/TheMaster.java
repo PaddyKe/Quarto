@@ -7,6 +7,11 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+/*
+  Currently plays like NotStupid but it also sorts out figures,
+  which wold lead to a direct win of the opponent.
+*/
+
 public class TheMaster extends Player {
 
     private static int counter = 0;
